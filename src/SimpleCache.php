@@ -49,7 +49,7 @@ class SimpleCache implements CacheInterface
 	 */
 	protected function getValidatedKey($key): string
 	{
-		if(empty($key) || is_string($key))
+		if(empty($key) || !is_string($key))
 		{
 			throw new InvalidArgumentException('A valid cache key must be a non-empty string.');
 		}
@@ -68,14 +68,21 @@ class SimpleCache implements CacheInterface
 	 * @param  iterable $keys Key name list
 	 * @return iterable
 	 */
-	protected function getValidatedIterable($keys): iterable
+	protected function getValidatedKeys($keys): iterable
 	{
 		if(!is_iterable($keys))
 		{
 			throw new InvalidArgumentException('A valid cache key list must be iterable.');
 		}
 
-		return $keys;
+		$validatedKeys = [];
+
+		foreach($keys as $key)
+		{
+			$validatedKeys[] = $this->getValidatedKey($key);
+		}
+
+		return $validatedKeys;
 	}
 
 	/**
@@ -135,13 +142,27 @@ class SimpleCache implements CacheInterface
 	 */
 	public function setMultiple($values, $ttl = null)
 	{
+		if(!is_iterable($values))
+		{
+			throw new InvalidArgumentException('The list of values must be iterable.');
+		}
+
+		$arrayValues = [];
+
+		foreach($values as $key => $value)
+		{
+			$arrayValues[$key] = $value;
+		}
+
+		unset($values);
+
 		$ttl = $this->calculateTTL($ttl);
 
 		$success = true;
 
-		foreach($this->getValidatedIterable($values) as $key => $value)
+		foreach($this->getValidatedKeys(array_keys($arrayValues)) as $key)
 		{
-			$success = $success && $this->set($key, $value, $ttl);
+			$success = $success && $this->store->put($key, $arrayValues[$key], $ttl);
 		}
 
 		return $success;
@@ -154,9 +175,9 @@ class SimpleCache implements CacheInterface
 	{
 		$values = [];
 
-		foreach($this->getValidatedIterable($keys) as $key)
+		foreach($this->getValidatedKeys($keys) as $key)
 		{
-			$values[$key] = $this->get($key, $default);
+			$values[$key] = $this->store->get($key) ?? $default;
 		}
 
 		return $values;
@@ -169,9 +190,9 @@ class SimpleCache implements CacheInterface
 	{
 		$success = true;
 
-		foreach($this->getValidatedIterable($keys) as $key)
+		foreach($this->getValidatedKeys($keys) as $key)
 		{
-			$success = $success && $this->delete($key);
+			$success = $success && $this->store->remove($key);
 		}
 
 		return $success;
