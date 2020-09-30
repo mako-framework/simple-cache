@@ -156,7 +156,7 @@ class SimpleCache implements CacheInterface
 
 		foreach($this->getValidatedIterable($keys) as $key)
 		{
-			$values = $this->get($key, $default);
+			$values[$key] = $this->get($key, $default);
 		}
 
 		return $values;
