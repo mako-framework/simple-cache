@@ -13,8 +13,11 @@ use mako\cache\simple\exceptions\InvalidArgumentException;
 use mako\cache\stores\StoreInterface;
 use Psr\SimpleCache\CacheInterface;
 
+use function array_keys;
+use function is_array;
 use function is_iterable;
 use function is_string;
+use function iterator_to_array;
 use function preg_match;
 
 /**
@@ -66,15 +69,10 @@ class SimpleCache implements CacheInterface
 	 * Returns a validated key list.
 	 *
 	 * @param  iterable $keys Key name list
-	 * @return iterable
+	 * @return array
 	 */
-	protected function getValidatedKeys($keys): iterable
+	protected function getValidatedKeys(iterable $keys): array
 	{
-		if(!is_iterable($keys))
-		{
-			throw new InvalidArgumentException('A valid cache key list must be iterable.');
-		}
-
 		$validatedKeys = [];
 
 		foreach($keys as $key)
@@ -147,22 +145,18 @@ class SimpleCache implements CacheInterface
 			throw new InvalidArgumentException('The list of values must be iterable.');
 		}
 
-		$arrayValues = [];
-
-		foreach($values as $key => $value)
+		if(!is_array($values))
 		{
-			$arrayValues[$key] = $value;
+			$values = iterator_to_array($values);
 		}
-
-		unset($values);
 
 		$ttl = $this->calculateTTL($ttl);
 
 		$success = true;
 
-		foreach($this->getValidatedKeys(array_keys($arrayValues)) as $key)
+		foreach($this->getValidatedKeys(array_keys($values)) as $key)
 		{
-			$success = $success && $this->store->put($key, $arrayValues[$key], $ttl);
+			$success = $success && $this->store->put($key, $values[$key], $ttl);
 		}
 
 		return $success;
@@ -173,6 +167,11 @@ class SimpleCache implements CacheInterface
 	 */
 	public function getMultiple($keys, $default = null)
 	{
+		if(!is_iterable($keys))
+		{
+			throw new InvalidArgumentException('A valid cache key list must be iterable.');
+		}
+
 		$values = [];
 
 		foreach($this->getValidatedKeys($keys) as $key)
@@ -188,6 +187,11 @@ class SimpleCache implements CacheInterface
 	 */
 	public function deleteMultiple($keys)
 	{
+		if(!is_iterable($keys))
+		{
+			throw new InvalidArgumentException('A valid cache key list must be iterable.');
+		}
+
 		$success = true;
 
 		foreach($this->getValidatedKeys($keys) as $key)
