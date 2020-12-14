@@ -86,7 +86,7 @@ class SimpleCache implements CacheInterface
 	/**
 	 * Calculates the TTL of the cache item in seconds.
 	 *
-	 * @param  int|\DateInterval|null $ttl Time to live
+	 * @param  \DateInterval|int|null $ttl Time to live
 	 * @return int
 	 */
 	protected function calculateTTL($ttl): int
@@ -104,7 +104,7 @@ class SimpleCache implements CacheInterface
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function set($key, $value, $ttl = null)
 	{
@@ -112,7 +112,7 @@ class SimpleCache implements CacheInterface
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function get($key, $default = null)
 	{
@@ -120,7 +120,7 @@ class SimpleCache implements CacheInterface
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function has($key)
 	{
@@ -128,7 +128,7 @@ class SimpleCache implements CacheInterface
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function delete($key)
 	{
@@ -136,7 +136,7 @@ class SimpleCache implements CacheInterface
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function setMultiple($values, $ttl = null)
 	{
@@ -163,7 +163,7 @@ class SimpleCache implements CacheInterface
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function getMultiple($keys, $default = null)
 	{
@@ -183,7 +183,7 @@ class SimpleCache implements CacheInterface
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function deleteMultiple($keys)
 	{
@@ -203,7 +203,7 @@ class SimpleCache implements CacheInterface
 	}
 
 	/**
-	 * {@inheritdoc}
+	 * {@inheritDoc}
 	 */
 	public function clear()
 	{
