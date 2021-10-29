@@ -22,8 +22,6 @@ use function preg_match;
 
 /**
  * Simple Cache adapter.
- *
- * @author Frederic G. Østby
  */
 class SimpleCache implements CacheInterface
 {

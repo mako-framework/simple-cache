@@ -12,8 +12,6 @@ use RuntimeException;
 
 /**
  * Invalid argument exception.
- *
- * @author Frederic G. Østby
  */
 class InvalidArgumentException extends RuntimeException implements SimpleCacheInvalidArgumentException
 {
