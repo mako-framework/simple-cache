@@ -15,7 +15,6 @@ use Psr\SimpleCache\CacheInterface;
 
 use function array_keys;
 use function is_array;
-use function is_iterable;
 use function is_string;
 use function iterator_to_array;
 use function preg_match;
@@ -43,7 +42,7 @@ class SimpleCache implements CacheInterface
 	 */
 	protected function getValidatedKey(string $key): string
 	{
-		if(empty($key) || !is_string($key))
+		if(empty($key))
 		{
 			throw new InvalidArgumentException('A valid cache key must be a non-empty string.');
 		}
@@ -131,11 +130,6 @@ class SimpleCache implements CacheInterface
 	 */
 	public function setMultiple(iterable $values, $ttl = null): bool
 	{
-		if(!is_iterable($values))
-		{
-			throw new InvalidArgumentException('The list of values must be iterable.');
-		}
-
 		if(!is_array($values))
 		{
 			$values = iterator_to_array($values);
@@ -158,11 +152,6 @@ class SimpleCache implements CacheInterface
 	 */
 	public function getMultiple(iterable $keys, $default = null): iterable
 	{
-		if(!is_iterable($keys))
-		{
-			throw new InvalidArgumentException('A valid cache key list must be iterable.');
-		}
-
 		$values = [];
 
 		foreach($this->getValidatedKeys($keys) as $key)
@@ -178,11 +167,6 @@ class SimpleCache implements CacheInterface
 	 */
 	public function deleteMultiple(iterable $keys): bool
 	{
-		if(!is_iterable($keys))
-		{
-			throw new InvalidArgumentException('A valid cache key list must be iterable.');
-		}
-
 		$success = true;
 
 		foreach($this->getValidatedKeys($keys) as $key)

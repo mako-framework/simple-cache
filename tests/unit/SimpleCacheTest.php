@@ -192,21 +192,6 @@ class SimpleCacheTest extends TestCase
 	/**
 	 *
 	 */
-	public function testSetMultipleWithInvalidValues(): void
-	{
-		$this->expectException(InvalidArgumentException::class);
-
-		/** @var \mako\cache\stores\StoreInterface $store */
-		$store = Mockery::mock(StoreInterface::class);
-
-		$cache = new SimpleCache($store);
-
-		$cache->setMultiple('foo');
-	}
-
-	/**
-	 *
-	 */
 	public function testSetMultipleWithValidValues(): void
 	{
 		/** @var \mako\cache\stores\StoreInterface|\Mockery\MockInterface $store */
@@ -242,21 +227,6 @@ class SimpleCacheTest extends TestCase
 		};
 
 		$this->assertTrue($cache->setMultiple($generator()));
-	}
-
-	/**
-	 *
-	 */
-	public function testGetMultipleWithInvalidKeys(): void
-	{
-		$this->expectException(InvalidArgumentException::class);
-
-		/** @var \mako\cache\stores\StoreInterface $store */
-		$store = Mockery::mock(StoreInterface::class);
-
-		$cache = new SimpleCache($store);
-
-		$cache->getMultiple('foo');
 	}
 
 	/**
@@ -318,21 +288,6 @@ class SimpleCacheTest extends TestCase
 		$this->assertSame('foo', $values['bar']);
 
 		$this->assertSame('default', $values['baz']);
-	}
-
-	/**
-	 *
-	 */
-	public function testDeleteMultipleWithInvalidKeys(): void
-	{
-		$this->expectException(InvalidArgumentException::class);
-
-		/** @var \mako\cache\stores\StoreInterface $store */
-		$store = Mockery::mock(StoreInterface::class);
-
-		$cache = new SimpleCache($store);
-
-		$cache->deleteMultiple('foo');
 	}
 
 	/**
