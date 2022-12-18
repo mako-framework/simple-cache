@@ -26,21 +26,14 @@ use function preg_match;
 class SimpleCache implements CacheInterface
 {
 	/**
-	 * Cache store instance.
-	 *
-	 * @var \mako\cache\stores\StoreInterface
-	 */
-	protected $store;
-
-	/**
 	 * Constructor.
 	 *
 	 * @param \mako\cache\stores\StoreInterface $store Cache store instance
 	 */
-	public function __construct(StoreInterface $store)
-	{
-		$this->store = $store;
-	}
+	public function __construct(
+		protected StoreInterface $store
+	)
+	{}
 
 	/**
 	 * Returns a validated key.
@@ -48,7 +41,7 @@ class SimpleCache implements CacheInterface
 	 * @param  string $key Key name
 	 * @return string
 	 */
-	protected function getValidatedKey($key): string
+	protected function getValidatedKey(string $key): string
 	{
 		if(empty($key) || !is_string($key))
 		{
@@ -87,7 +80,7 @@ class SimpleCache implements CacheInterface
 	 * @param  \DateInterval|int|null $ttl Time to live
 	 * @return int
 	 */
-	protected function calculateTTL($ttl): int
+	protected function calculateTTL(DateInterval|int|null $ttl): int
 	{
 		if($ttl instanceof DateInterval)
 		{
@@ -104,7 +97,7 @@ class SimpleCache implements CacheInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public function set($key, $value, $ttl = null)
+	public function set(string $key, mixed $value, $ttl = null): bool
 	{
 		return $this->store->put($this->getValidatedKey($key), $value, $this->calculateTTL($ttl));
 	}
@@ -112,7 +105,7 @@ class SimpleCache implements CacheInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public function get($key, $default = null)
+	public function get(string $key, mixed $default = null): mixed
 	{
 		return $this->store->get($this->getValidatedKey($key)) ?? $default;
 	}
@@ -120,7 +113,7 @@ class SimpleCache implements CacheInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public function has($key)
+	public function has(string $key): bool
 	{
 		return $this->store->has($this->getValidatedKey($key));
 	}
@@ -128,7 +121,7 @@ class SimpleCache implements CacheInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public function delete($key)
+	public function delete(string $key): bool
 	{
 		return $this->store->remove($this->getValidatedKey($key));
 	}
@@ -136,7 +129,7 @@ class SimpleCache implements CacheInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setMultiple($values, $ttl = null)
+	public function setMultiple(iterable $values, $ttl = null): bool
 	{
 		if(!is_iterable($values))
 		{
@@ -163,7 +156,7 @@ class SimpleCache implements CacheInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getMultiple($keys, $default = null)
+	public function getMultiple(iterable $keys, $default = null): iterable
 	{
 		if(!is_iterable($keys))
 		{
@@ -183,7 +176,7 @@ class SimpleCache implements CacheInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public function deleteMultiple($keys)
+	public function deleteMultiple(iterable $keys): bool
 	{
 		if(!is_iterable($keys))
 		{
@@ -203,7 +196,7 @@ class SimpleCache implements CacheInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public function clear()
+	public function clear(): bool
 	{
 		return $this->store->clear();
 	}
