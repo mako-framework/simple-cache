@@ -15,7 +15,6 @@ use Psr\SimpleCache\CacheInterface;
 
 use function array_keys;
 use function is_array;
-use function is_string;
 use function iterator_to_array;
 use function preg_match;
 
