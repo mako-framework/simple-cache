@@ -23,7 +23,7 @@
         "mako/framework": "^9.0.0-dev",
         "mockery/mockery": "^1.5.1",
         "phpstan/phpstan": "^1.4.5",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.6|^10.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
