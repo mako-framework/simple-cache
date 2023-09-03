@@ -25,8 +25,6 @@ class SimpleCache implements CacheInterface
 {
 	/**
 	 * Constructor.
-	 *
-	 * @param \mako\cache\stores\StoreInterface $store Cache store instance
 	 */
 	public function __construct(
 		protected StoreInterface $store
@@ -35,9 +33,6 @@ class SimpleCache implements CacheInterface
 
 	/**
 	 * Returns a validated key.
-	 *
-	 * @param  string $key Key name
-	 * @return string
 	 */
 	protected function getValidatedKey(string $key): string
 	{
@@ -56,9 +51,6 @@ class SimpleCache implements CacheInterface
 
 	/**
 	 * Returns a validated key list.
-	 *
-	 * @param  iterable $keys Key name list
-	 * @return array
 	 */
 	protected function getValidatedKeys(iterable $keys): array
 	{
@@ -74,11 +66,8 @@ class SimpleCache implements CacheInterface
 
 	/**
 	 * Calculates the TTL of the cache item in seconds.
-	 *
-	 * @param  \DateInterval|int|null $ttl Time to live
-	 * @return int
 	 */
-	protected function calculateTTL(DateInterval|int|null $ttl): int
+	protected function calculateTTL(null|DateInterval|int $ttl): int
 	{
 		if($ttl instanceof DateInterval)
 		{
@@ -95,7 +84,7 @@ class SimpleCache implements CacheInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public function set(string $key, mixed $value, $ttl = null): bool
+	public function set(string $key, mixed $value, null|DateInterval|int $ttl = null): bool
 	{
 		return $this->store->put($this->getValidatedKey($key), $value, $this->calculateTTL($ttl));
 	}
@@ -127,7 +116,7 @@ class SimpleCache implements CacheInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public function setMultiple(iterable $values, $ttl = null): bool
+	public function setMultiple(iterable $values, null|DateInterval|int $ttl = null): bool
 	{
 		if(!is_array($values))
 		{
@@ -149,7 +138,7 @@ class SimpleCache implements CacheInterface
 	/**
 	 * {@inheritDoc}
 	 */
-	public function getMultiple(iterable $keys, $default = null): iterable
+	public function getMultiple(iterable $keys, mixed $default = null): iterable
 	{
 		$values = [];
 
