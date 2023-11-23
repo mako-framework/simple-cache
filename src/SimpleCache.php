@@ -28,21 +28,19 @@ class SimpleCache implements CacheInterface
 	 */
 	public function __construct(
 		protected StoreInterface $store
-	)
-	{}
+	) {
+	}
 
 	/**
 	 * Returns a validated key.
 	 */
 	protected function getValidatedKey(string $key): string
 	{
-		if(empty($key))
-		{
+		if (empty($key)) {
 			throw new InvalidArgumentException('A valid cache key must be a non-empty string.');
 		}
 
-		if(preg_match('/\{|\}|\@|\:|\(|\)|\/|\\\/', $key) === 1)
-		{
+		if (preg_match('/\{|\}|\@|\:|\(|\)|\/|\\\/', $key) === 1) {
 			throw new InvalidArgumentException('A valid cache key can not contain any of the following characters: [ {}()/\@: ].');
 		}
 
@@ -56,8 +54,7 @@ class SimpleCache implements CacheInterface
 	{
 		$validatedKeys = [];
 
-		foreach($keys as $key)
-		{
+		foreach ($keys as $key) {
 			$validatedKeys[] = $this->getValidatedKey($key);
 		}
 
@@ -69,8 +66,7 @@ class SimpleCache implements CacheInterface
 	 */
 	protected function calculateTTL(null|DateInterval|int $ttl): int
 	{
-		if($ttl instanceof DateInterval)
-		{
+		if ($ttl instanceof DateInterval) {
 			$now = new DateTimeImmutable;
 
 			$then = $now->add($ttl);
@@ -118,8 +114,7 @@ class SimpleCache implements CacheInterface
 	 */
 	public function setMultiple(iterable $values, null|DateInterval|int $ttl = null): bool
 	{
-		if(!is_array($values))
-		{
+		if (!is_array($values)) {
 			$values = iterator_to_array($values);
 		}
 
@@ -127,8 +122,7 @@ class SimpleCache implements CacheInterface
 
 		$success = true;
 
-		foreach($this->getValidatedKeys(array_keys($values)) as $key)
-		{
+		foreach ($this->getValidatedKeys(array_keys($values)) as $key) {
 			$success = $success && $this->store->put($key, $values[$key], $ttl);
 		}
 
@@ -142,8 +136,7 @@ class SimpleCache implements CacheInterface
 	{
 		$values = [];
 
-		foreach($this->getValidatedKeys($keys) as $key)
-		{
+		foreach ($this->getValidatedKeys($keys) as $key) {
 			$values[$key] = $this->store->get($key) ?? $default;
 		}
 
@@ -157,8 +150,7 @@ class SimpleCache implements CacheInterface
 	{
 		$success = true;
 
-		foreach($this->getValidatedKeys($keys) as $key)
-		{
+		foreach ($this->getValidatedKeys($keys) as $key) {
 			$success = $success && $this->store->remove($key);
 		}
 

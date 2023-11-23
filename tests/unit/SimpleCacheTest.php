@@ -220,8 +220,7 @@ class SimpleCacheTest extends TestCase
 
 		$cache = new SimpleCache($store);
 
-		$generator = function (): Generator
-		{
+		$generator = function (): Generator {
 			yield 'foo' => 'bar';
 			yield 'bar' => 'foo';
 		};
@@ -272,8 +271,7 @@ class SimpleCacheTest extends TestCase
 
 		$cache = new SimpleCache($store);
 
-		$generator = function (): Generator
-		{
+		$generator = function (): Generator {
 			yield 'foo';
 			yield 'bar';
 			yield 'baz';
@@ -325,8 +323,7 @@ class SimpleCacheTest extends TestCase
 
 		$cache = new SimpleCache($store);
 
-		$generator = function (): Generator
-		{
+		$generator = function (): Generator {
 			yield 'foo';
 			yield 'bar';
 			yield 'baz';
