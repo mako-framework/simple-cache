@@ -13,12 +13,11 @@ use mako\cache\simple\SimpleCache;
 use mako\cache\stores\StoreInterface;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Psr\SimpleCache\InvalidArgumentException;
 
-/**
- * @group unit
- */
+#[Group('unit')]
 class SimpleCacheTest extends TestCase
 {
 	use MockeryPHPUnitIntegration;
