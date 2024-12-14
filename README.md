@@ -7,7 +7,7 @@ A [Simple Cache](https://www.php-fig.org/psr/psr-16/) adapter for the Mako Frame
 
 ## Requirements
 
-Mako 10.0 or greater.
+Mako 11.0 or greater.
 
 ## Installation
 
