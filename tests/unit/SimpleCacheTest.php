@@ -29,7 +29,7 @@ class SimpleCacheTest extends TestCase
 	{
 		$this->expectException(InvalidArgumentException::class);
 
-		/** @var \mako\cache\stores\StoreInterface $store */
+		/** @var StoreInterface $store */
 		$store = Mockery::mock(StoreInterface::class);
 
 		$cache = new SimpleCache($store);
@@ -42,7 +42,7 @@ class SimpleCacheTest extends TestCase
 	 */
 	public function testSetWithValidKey(): void
 	{
-		/** @var \mako\cache\stores\StoreInterface|\Mockery\MockInterface $store */
+		/** @var Mockery\MockInterface|StoreInterface $store */
 		$store = Mockery::mock(StoreInterface::class);
 
 		$store->shouldReceive('put')->once()->with('foo', 'bar', 0)->andReturn(true);
@@ -57,7 +57,7 @@ class SimpleCacheTest extends TestCase
 	 */
 	public function testSetWithValidKeyAndIntegerTTL(): void
 	{
-		/** @var \mako\cache\stores\StoreInterface|\Mockery\MockInterface $store */
+		/** @var Mockery\MockInterface|StoreInterface $store */
 		$store = Mockery::mock(StoreInterface::class);
 
 		$store->shouldReceive('put')->once()->with('foo', 'bar', 123)->andReturn(true);
@@ -72,7 +72,7 @@ class SimpleCacheTest extends TestCase
 	 */
 	public function testSetWithValidKeyAndDateIntervalTTL(): void
 	{
-		/** @var \mako\cache\stores\StoreInterface|\Mockery\MockInterface $store */
+		/** @var Mockery\MockInterface|StoreInterface $store */
 		$store = Mockery::mock(StoreInterface::class);
 
 		$store->shouldReceive('put')->once()->with('foo', 'bar', 123)->andReturn(true);
@@ -89,7 +89,7 @@ class SimpleCacheTest extends TestCase
 	{
 		$this->expectException(InvalidArgumentException::class);
 
-		/** @var \mako\cache\stores\StoreInterface $store */
+		/** @var StoreInterface $store */
 		$store = Mockery::mock(StoreInterface::class);
 
 		$cache = new SimpleCache($store);
@@ -102,7 +102,7 @@ class SimpleCacheTest extends TestCase
 	 */
 	public function testGetWithValidKey(): void
 	{
-		/** @var \mako\cache\stores\StoreInterface|\Mockery\MockInterface $store */
+		/** @var Mockery\MockInterface|StoreInterface $store */
 		$store = Mockery::mock(StoreInterface::class);
 
 		$store->shouldReceive('get')->once()->with('foo')->andReturn('bar');
@@ -127,7 +127,7 @@ class SimpleCacheTest extends TestCase
 	{
 		$this->expectException(InvalidArgumentException::class);
 
-		/** @var \mako\cache\stores\StoreInterface $store */
+		/** @var StoreInterface $store */
 		$store = Mockery::mock(StoreInterface::class);
 
 		$cache = new SimpleCache($store);
@@ -140,7 +140,7 @@ class SimpleCacheTest extends TestCase
 	 */
 	public function testHasWithValidKey(): void
 	{
-		/** @var \mako\cache\stores\StoreInterface|\Mockery\MockInterface $store */
+		/** @var Mockery\MockInterface|StoreInterface $store */
 		$store = Mockery::mock(StoreInterface::class);
 
 		$store->shouldReceive('has')->once()->with('foo')->andReturn(true);
@@ -161,7 +161,7 @@ class SimpleCacheTest extends TestCase
 	{
 		$this->expectException(InvalidArgumentException::class);
 
-		/** @var \mako\cache\stores\StoreInterface $store */
+		/** @var StoreInterface $store */
 		$store = Mockery::mock(StoreInterface::class);
 
 		$cache = new SimpleCache($store);
@@ -174,7 +174,7 @@ class SimpleCacheTest extends TestCase
 	 */
 	public function testDeleteWithValidKey(): void
 	{
-		/** @var \mako\cache\stores\StoreInterface|\Mockery\MockInterface $store */
+		/** @var Mockery\MockInterface|StoreInterface $store */
 		$store = Mockery::mock(StoreInterface::class);
 
 		$store->shouldReceive('remove')->once()->with('foo')->andReturn(true);
@@ -193,7 +193,7 @@ class SimpleCacheTest extends TestCase
 	 */
 	public function testSetMultipleWithValidValues(): void
 	{
-		/** @var \mako\cache\stores\StoreInterface|\Mockery\MockInterface $store */
+		/** @var Mockery\MockInterface|StoreInterface $store */
 		$store = Mockery::mock(StoreInterface::class);
 
 		$store->shouldReceive('put')->once()->with('foo', 'bar', 0)->andReturn(true);
@@ -210,7 +210,7 @@ class SimpleCacheTest extends TestCase
 	 */
 	public function testSetMultipleWithValidGeneratorValues(): void
 	{
-		/** @var \mako\cache\stores\StoreInterface|\Mockery\MockInterface $store */
+		/** @var Mockery\MockInterface|StoreInterface $store */
 		$store = Mockery::mock(StoreInterface::class);
 
 		$store->shouldReceive('put')->once()->with('foo', 'bar', 0)->andReturn(true);
@@ -232,7 +232,7 @@ class SimpleCacheTest extends TestCase
 	 */
 	public function testGetMultipleWithValidKeys(): void
 	{
-		/** @var \mako\cache\stores\StoreInterface|\Mockery\MockInterface $store */
+		/** @var Mockery\MockInterface|StoreInterface $store */
 		$store = Mockery::mock(StoreInterface::class);
 
 		$store->shouldReceive('get')->once()->with('foo')->andReturn('bar');
@@ -259,7 +259,7 @@ class SimpleCacheTest extends TestCase
 	 */
 	public function testGetMultipleWithValidGeneratorKeys(): void
 	{
-		/** @var \mako\cache\stores\StoreInterface|\Mockery\MockInterface $store */
+		/** @var Mockery\MockInterface|StoreInterface $store */
 		$store = Mockery::mock(StoreInterface::class);
 
 		$store->shouldReceive('get')->once()->with('foo')->andReturn('bar');
@@ -292,7 +292,7 @@ class SimpleCacheTest extends TestCase
 	 */
 	public function testDeleteMultipleWithValidKeys(): void
 	{
-		/** @var \mako\cache\stores\StoreInterface|\Mockery\MockInterface $store */
+		/** @var Mockery\MockInterface|StoreInterface $store */
 		$store = Mockery::mock(StoreInterface::class);
 
 		$store->shouldReceive('remove')->once()->with('foo')->andReturn(true);
@@ -311,7 +311,7 @@ class SimpleCacheTest extends TestCase
 	 */
 	public function testDeleteMultipleWithValidGeneratorKeys(): void
 	{
-		/** @var \mako\cache\stores\StoreInterface|\Mockery\MockInterface $store */
+		/** @var Mockery\MockInterface|StoreInterface $store */
 		$store = Mockery::mock(StoreInterface::class);
 
 		$store->shouldReceive('remove')->once()->with('foo')->andReturn(true);
@@ -336,7 +336,7 @@ class SimpleCacheTest extends TestCase
 	 */
 	public function testClear(): void
 	{
-		/** @var \mako\cache\stores\StoreInterface|\Mockery\MockInterface $store */
+		/** @var Mockery\MockInterface|StoreInterface $store */
 		$store = Mockery::mock(StoreInterface::class);
 
 		$store->shouldReceive('clear')->once()->andReturn(true);
