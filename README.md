@@ -3,6 +3,8 @@
 [![Build Status](https://github.com/mako-framework/simple-cache/workflows/Tests/badge.svg)](https://github.com/mako-framework/simple-cache/actions?query=workflow%3ATests)
 [![Static analysis](https://github.com/mako-framework/simple-cache/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/mako-framework/simple-cache/actions/workflows/static-analysis.yml)
 
+⚠️ As of Mako 12, the SimpleCache implementation is part of the framework core.
+
 A [Simple Cache](https://www.php-fig.org/psr/psr-16/) adapter for the Mako Framework.
 
 ## Requirements
